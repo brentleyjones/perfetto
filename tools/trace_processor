@@ -224,8 +224,10 @@ def download_or_get_cached(file_name, url, sha256):
   ~/.local/share/perfetto/prebuilts/$tool_name. On subsequent invocations it
   just runs the cached version.
   """
-  dir = os.path.join(
+  default_dir = os.path.join(
       os.path.expanduser('~'), '.local', 'share', 'perfetto', 'prebuilts')
+  dir = os.path.expanduser(
+    os.environ.get('PERFETTO_TRACE_PROCESSOR_INSTALL_PATH', default_dir))
   os.makedirs(dir, exist_ok=True)
   bin_path = os.path.join(dir, file_name)
   sha256_path = os.path.join(dir, file_name + '.sha256')
